@@ -14,10 +14,14 @@ from tryout import SwapScanner
 import threading
 from telegram.ext import JobQueue
 
+
+
+
 load_dotenv()
 BUY_EMOJI=['🟢']
 TIMER_INTERVAL = 5 * 60  # 5 minutes
 UPDATE_INTERVAL = 5  # every 5 seconds
+
 
 API_KEY=os.getenv('API_KEY')
 ETHER_KEY=os.getenv('ether_key')
@@ -291,8 +295,10 @@ def query_swap_events(app):
                                     shortened_address = f'{address[:4]}…{address[-4:]}'
                                     etherscan_address_url = f'https://etherscan.io/address/{address}'
                                     transc_hash = f'https://etherscan.io/tx/{tr_hash[-1]}'
+                                    transaction_hash = entry['transactionHash'].hex()  # This will give you the transaction hash
+
                                     
-                                    fft=f'<a href="{etherscan_address_url}">{shortened_address}</a> | <a href="{transc_hash}">Txn</a>'
+                                    fft=f'<a href="{etherscan_address_url}">{shortened_address}</a> | <a href="https://etherscan.io/tx/{transaction_hash}">Txn</a>'
                                     chart_url=f"https://dexscreener.com/ethereum/{checker[str(chat_id)]['p_address']}"
                                     chart=f'<a href="{chart_url}">Chart</a>'
                                     formatted_number = millify.millify(checker[str(chat_id)]['market_cap'], precision=1)  # Output: '455.6M'
@@ -300,9 +306,12 @@ def query_swap_events(app):
                                     token_amount = '{:,}'.format(token_amount)
                                     formatted_number = '${:,.0f}'.format(MKTCap[0])
                                     loop = asyncio.new_event_loop()
+
                                     number = amount0Out
-                                    formatted_tokennumber = number / 1000000000000000000
-                                    print(f"{formatted_tokennumber:.2f}")
+                                    print(f'nu{number}')
+                                    formatted_tokennumber = number / 1000000000
+
+                                    print(f"you{formatted_tokennumber:.2f}")
                                     ratio=checker[str(chat_id)]['USD']
                                     ratio=float(ratio)
                                     # print(type(round(formatted_tokennumber,2)))
@@ -311,8 +320,8 @@ def query_swap_events(app):
                                     message=(
                                         f"<b> ✅ {checker[str(chat_id)]['token_symbols']}</b> Buy!\n\n"
                                         f"{demo[chat_idd]['emoji']*divide_by}\n\n"
-                                        f"💵 {round(amount1In/(10**18),3)} ETH (${round(price_in_usd,2)})\n"
-                                        f"🪙 {token_amount} <b>{checker[str(chat_id)]['token_symbols']}</b>\n"
+                                        f"💵 {round(amount1In/(10**18),5)} ETH (${round(price_in_usd,2)})\n"
+                                        f"🪙 {formatted_tokennumber:.2f} <b>{checker[str(chat_id)]['token_symbols']}</b>\n"
                                         f"🔷 {fft}\n"
                                         # f"🔼 Position +{position_percentage}\n"
                                         f"🔼 Market Cap <b>{formatted_number}</b>\n"
@@ -392,6 +401,7 @@ def query_swap_events(app):
                                     loop = asyncio.new_event_loop()
 
                                     number = amount0Out
+                                    print(f'you{number}')
                                     formatted_tokennumber = number / 1000000000000000000
 
                                     print(f"{formatted_tokennumber:.2f}")
@@ -399,7 +409,8 @@ def query_swap_events(app):
                                     ratio=checker[str(chat_id)]['USD']
                                     ratio=float(ratio)
                                     # print(type(round(formatted_tokennumber,2)))
-                                    price_in_usd=(round(formatted_tokennumber,2)) * ratio
+                                    price_in_usd=(number/10**9) * ratio
+                                    print(price_in_usd)
                                     divide_by=int(price_in_usd//10)
                                     topic_array.append((formatted_hex,round(price_in_usd,2),f"{formatted_tokennumber:.2f} {checker[str(chat_id)]['token_symbols']}"))
 
@@ -652,7 +663,6 @@ async def handle_text_message(update:Update, context: ContextTypes.DEFAULT_TYPE)
 
     #### the inline wld depend on the number of pair returns ##
             
-        
             url=URL
             print(user_data[str(chat_id)])
             print(type(user_data[str(chat_id)]['token_address@']))
