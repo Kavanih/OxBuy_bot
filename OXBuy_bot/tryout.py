@@ -55,4 +55,3 @@ class SwapScanner:
             self.query_swap_events()
             time.sleep(query_interval)
 
-

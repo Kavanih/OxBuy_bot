@@ -15,8 +15,6 @@ import threading
 from telegram.ext import JobQueue
 
 
-
-
 load_dotenv()
 BUY_EMOJI=['🟢']
 TIMER_INTERVAL = 5 * 60  # 5 minutes
@@ -55,8 +53,9 @@ demo={
     }
 }
 
+running=True
 
-print(group_tracker)
+# print(group_tracker)
 # update.message.chat_id
 rpc_url = "https://mainnet.infura.io/v3/c182d33f6fa949a294257059d5dd4248"
 print(rpc_url)
@@ -252,11 +251,14 @@ async def big_buy_timing(context: ContextTypes.DEFAULT_TYPE):
         print('Error updating the countdown after retries. Please try again later.')
 
     time.sleep(QUERY_INTERVAL)
+
 def query_swap_events(app):
+    global running
     global global_bot
     QUERY_INTERVAL = 10
-    while True:
+    while running:
         keys = list(group_tracker.keys())
+        # print(group_tracker)
         while keys:
             key = keys.pop(0)
             chat_id, contract_address = key, group_tracker[key]  
@@ -317,6 +319,7 @@ def query_swap_events(app):
                                     # print(type(round(formatted_tokennumber,2)))
                                     price_in_usd=(round(formatted_tokennumber,2)) * ratio
                                     divide_by=int(price_in_usd//10)
+                                    
                                     message=(
                                         f"<b> ✅ {checker[str(chat_id)]['token_symbols']}</b> Buy!\n\n"
                                         f"{demo[chat_idd]['emoji']*divide_by}\n\n"
@@ -467,15 +470,15 @@ async def tutorial(update:Update, context :ContextTypes.DEFAULT_TYPE):
     user_name = update.message.from_user.first_name
     original_message_id = update.message.message_id
     # print(chat_type)
-    if chat_type == 'private':
-        response=(
-        f"<a href='https://t.me/OxBuy_bot'>@OxBuy_bot</a>Tutorial\n\n"
-        f"Step 1: Add @OxBuy_bot as an Administrator in your Group"
-        f"Step 2: Type /add in your Group"
-        f"Step 3: Enter the contract address"
-        f"Step 4: Type /settings to Adjust Emoji, or start a Buy Comp!"
-    )
-        await context.bot.send_message(chat_id=user_id, text=response,parse_mode='HTML',disable_web_page_preview=True, reply_to_message_id=original_message_id)  
+    
+    response=(
+    f"<a href='https://t.me/OxBuy_bot'>@OxBuy_bot</a>Tutorial\n\n"
+    f"Step 1: Add @OxBuy_bot as an Administrator in your Group"
+    f"Step 2: Type /add in your Group"
+    f"Step 3: Enter the contract address"
+    f"Step 4: Type /settings to Adjust Emoji, or start a Buy Comp!"
+)
+    await context.bot.send_message(chat_id=user_id, text=response,parse_mode='HTML',disable_web_page_preview=True, reply_to_message_id=original_message_id)  
 
 async def start(update:Update, context :ContextTypes.DEFAULT_TYPE):
     chat_type:str =update.message.chat.type
@@ -528,7 +531,7 @@ async def is_user_admin(update: Update, context: ContextTypes.DEFAULT_TYPE) -> b
     
 
 async def add(update:Update, context :ContextTypes.DEFAULT_TYPE):
-
+    global mode
     chat_type:str =update.message.chat.type
     original_message_id = update.message.message_id
     if not await is_user_admin(update, context):
@@ -541,8 +544,32 @@ async def add(update:Update, context :ContextTypes.DEFAULT_TYPE):
         
         if bot_chat_member.status == "administrator":
             print(chat_id in chat_ids)
-            if chat_id  in gg:
-                await context.bot.send_message(chat_id, text=f'❗️ Bot already in use in this group for token {gg[chat_id]} ') 
+            try:
+                with open('user_tokens.json','r')as check_id:
+                    content=json.load(check_id)
+
+            except json.decoder.JSONDecodeError:
+                with open('user_tokens.json','w')as check_id:
+                    dummy={
+                        "":{
+                            "id":'',
+                            "token":""
+                        }
+                    }
+                    
+                    json.dump(dummy,check_id,indent=4)
+
+                with open('user_tokens.json','r')as check_id:
+                    content=json.load(check_id)
+                        
+            if str(chat_id)+'bsc' in content or str(chat_id)+'eth' in content:
+                try:
+                    await context.bot.send_message(chat_id, text=f"❗️ Bot already in use in this group for token {content[str(chat_id)+'bsc']['token']} ") 
+                except KeyError:
+                    await context.bot.send_message(chat_id, text=f"❗️ Bot already in use in this group for token {content[str(chat_id)+'eth']['token']} ") 
+                except Exception as e:
+                    print(f'Error {e} happened')
+                
             else:
                 chat_ids.append(chat_id)
                 text = "Choose a chain:"
@@ -553,6 +580,7 @@ async def add(update:Update, context :ContextTypes.DEFAULT_TYPE):
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 
                 await context.bot.send_message(chat_id, text, reply_markup=reply_markup,reply_to_message_id=original_message_id)
+
 
         else:
             await context.bot.send_message(chat_id, text=f'❗️ Administrator permission needed. Make me admin please!') 
@@ -588,8 +616,39 @@ async def add_btn(update:Update, context :ContextTypes.DEFAULT_TYPE):
 
     # message_id = sent_message.message_id
     # sent_text = sent_message.text
+
+
+async def remove(update:Update,context:ContextTypes.DEFAULT_TYPE):
+    global running
+    chat_id = update.message.chat_id
+    original_message_id = update.message.message_id
+    chat_type:str =update.message.chat.type
+
+    if chat_type == 'group':
+        try:
+            with open('user_tokens.json','r')as user_content:
+                cons=json.load(user_content)
+                print(mode)
+                if len(mode)!=0:
+                    token=cons[str(chat_id)+str(mode)]['token']
+                    cons.pop(str(chat_id)+str(mode))
+                    # group_tracker={}
+                    print(cons)
+                    await context.bot.send_message(chat_id, text=f"❗️ Token {token} removed",reply_to_message_id=original_message_id)
+                    running=False
+                    with open('user_tokens.json','w')as user_content:
+                        json.dump(cons,user_content,indent=4)
+                else:
+                    await context.bot.send_message(chat_id, text="❗️ No Token in use",reply_to_message_id=original_message_id)    
+        except NameError:
+            await context.bot.send_message(chat_id, text="❗️ No Token in use",reply_to_message_id=original_message_id)
+
+        except json.decoder.JSONDecodeError:
+            await context.bot.send_message(chat_id, text="❗️ No Token in use",reply_to_message_id=original_message_id)
+
+    
 async def handle_text_message(update:Update, context: ContextTypes.DEFAULT_TYPE):
-    global mode
+    global mode,running
     original_message_id = update.message.message_id
     chat_id = update.message.chat_id
     text_message = update.message.text
@@ -659,8 +718,6 @@ async def handle_text_message(update:Update, context: ContextTypes.DEFAULT_TYPE)
             user_data[str(chat_id)]["token_address@"] = text_message
 
             
-
-
     #### the inline wld depend on the number of pair returns ##
             
             url=URL
@@ -771,6 +828,8 @@ async def handle_text_message(update:Update, context: ContextTypes.DEFAULT_TYPE)
                         await context.bot.send_message(chat_id,text, reply_markup=reply_markup_pair,reply_to_message_id=original_message_id)
                         # Clear the awaiting_token flag
                         user_data[str(chat_id)]["awaiting_token"] = False
+                        running=True
+
 
                         # print('started listening ....... ')
 
@@ -920,6 +979,7 @@ async def handle_text_message(update:Update, context: ContextTypes.DEFAULT_TYPE)
                             await context.bot.send_message(chat_id,text, reply_markup=reply_markup_pair,reply_to_message_id=original_message_id)
                             # Clear the awaiting_token flag
                             user_data[str(chat_id)+'bsc']["awaiting_token"] = False
+                            running=True
                             print(file_details)
                             try:
                                 print('checked')
@@ -1148,6 +1208,7 @@ def main():
     app=Application.builder().token(API_KEY).build()
     global_bot = app.bot
     app.add_handler(CommandHandler('start',start))
+    # app.add_handler(CommandHandler('remove',remove))
     app.add_handler(CommandHandler('settings',settings))
     # app.add_handler(CommandHandler('competitions',set_timer))
     app.add_handler(CommandHandler('tutorial',tutorial))
