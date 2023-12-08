@@ -1,4 +1,295 @@
 {
     "schemaVersion": "1.0.0",
-    "pairs": null
+    "pairs": [
+        {
+            "chainId": "bsc",
+            "dexId": "pancakeswap",
+            "url": "https://dexscreener.com/bsc/0xda574013e8e67e822d0547d9cd9e8e1075827e3a",
+            "pairAddress": "0xDA574013e8E67E822D0547D9Cd9e8E1075827E3A",
+            "labels": [
+                "v2"
+            ],
+            "baseToken": {
+                "address": "0x88DA9901B3A02fE24E498e1eD683D2310383E295",
+                "name": "Baby Grok",
+                "symbol": "BabyGrok"
+            },
+            "quoteToken": {
+                "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+                "name": "Wrapped BNB",
+                "symbol": "WBNB"
+            },
+            "priceNative": "0.00000000000007529",
+            "priceUsd": "0.00000000001713",
+            "txns": {
+                "m5": {
+                    "buys": 8,
+                    "sells": 6
+                },
+                "h1": {
+                    "buys": 67,
+                    "sells": 64
+                },
+                "h6": {
+                    "buys": 651,
+                    "sells": 356
+                },
+                "h24": {
+                    "buys": 2211,
+                    "sells": 1110
+                }
+            },
+            "volume": {
+                "h24": 632516.64,
+                "h6": 192389.29,
+                "h1": 16540.2,
+                "m5": 718.6
+            },
+            "priceChange": {
+                "m5": -0.32,
+                "h1": -1.53,
+                "h6": -1.7,
+                "h24": 9.92
+            },
+            "liquidity": {
+                "usd": 643486.65,
+                "base": 18776346039417628,
+                "quote": 1414.3882
+            },
+            "fdv": 7195440,
+            "pairCreatedAt": 1699620619000
+        },
+        {
+            "chainId": "bsc",
+            "dexId": "pancakeswap",
+            "url": "https://dexscreener.com/bsc/0x68c3117d708d56f75cf6c93e6bc33e05e4534c55",
+            "pairAddress": "0x68c3117D708d56F75cf6C93E6bC33E05e4534C55",
+            "labels": [
+                "v3"
+            ],
+            "baseToken": {
+                "address": "0x88DA9901B3A02fE24E498e1eD683D2310383E295",
+                "name": "Baby Grok",
+                "symbol": "BabyGrok"
+            },
+            "quoteToken": {
+                "address": "0x55d398326f99059fF775485246999027B3197955",
+                "name": "Tether USD",
+                "symbol": "USDT"
+            },
+            "priceNative": "0.00000000001719",
+            "priceUsd": "0.00000000001719",
+            "txns": {
+                "m5": {
+                    "buys": 1,
+                    "sells": 2
+                },
+                "h1": {
+                    "buys": 13,
+                    "sells": 14
+                },
+                "h6": {
+                    "buys": 105,
+                    "sells": 83
+                },
+                "h24": {
+                    "buys": 326,
+                    "sells": 255
+                }
+            },
+            "volume": {
+                "h24": 40154.04,
+                "h6": 11418.2,
+                "h1": 1025.5,
+                "m5": 158.71
+            },
+            "priceChange": {
+                "m5": -4.07,
+                "h1": -1.83,
+                "h6": -0.8,
+                "h24": 10.38
+            },
+            "liquidity": {
+                "usd": 3629.8,
+                "base": 96999768429940,
+                "quote": 1961.6393
+            },
+            "fdv": 7222991,
+            "pairCreatedAt": 1700940763000
+        },
+        {
+            "chainId": "bsc",
+            "dexId": "pancakeswap",
+            "url": "https://dexscreener.com/bsc/0x9bf805b0f2288d8615193b448319ba7721729a6e",
+            "pairAddress": "0x9bF805B0F2288d8615193b448319ba7721729a6E",
+            "labels": [
+                "v2"
+            ],
+            "baseToken": {
+                "address": "0x88DA9901B3A02fE24E498e1eD683D2310383E295",
+                "name": "Baby Grok",
+                "symbol": "BabyGrok"
+            },
+            "quoteToken": {
+                "address": "0x55d398326f99059fF775485246999027B3197955",
+                "name": "Tether USD",
+                "symbol": "USDT"
+            },
+            "priceNative": "0.00000000001707",
+            "priceUsd": "0.00000000001707",
+            "txns": {
+                "m5": {
+                    "buys": 1,
+                    "sells": 2
+                },
+                "h1": {
+                    "buys": 3,
+                    "sells": 5
+                },
+                "h6": {
+                    "buys": 35,
+                    "sells": 25
+                },
+                "h24": {
+                    "buys": 146,
+                    "sells": 119
+                }
+            },
+            "volume": {
+                "h24": 85825.49,
+                "h6": 64438.53,
+                "h1": 57.19,
+                "m5": 19.43
+            },
+            "priceChange": {
+                "m5": -3.6,
+                "h1": -2.65,
+                "h6": -1.98,
+                "h24": -3.01
+            },
+            "liquidity": {
+                "usd": 1125.74,
+                "base": 32955690771470,
+                "quote": 562.8703
+            },
+            "fdv": 7173429,
+            "pairCreatedAt": 1699710654000
+        },
+        {
+            "chainId": "bsc",
+            "dexId": "pancakeswap",
+            "url": "https://dexscreener.com/bsc/0x1f29aa89b21eb07084bcc151f6b917b39ff6f796",
+            "pairAddress": "0x1f29Aa89B21eB07084bcc151f6B917b39ff6F796",
+            "labels": [
+                "v3"
+            ],
+            "baseToken": {
+                "address": "0x88DA9901B3A02fE24E498e1eD683D2310383E295",
+                "name": "Baby Grok",
+                "symbol": "BabyGrok"
+            },
+            "quoteToken": {
+                "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+                "name": "Wrapped BNB",
+                "symbol": "WBNB"
+            },
+            "priceNative": "0.00000000000007813",
+            "priceUsd": "0.00000000001784",
+            "txns": {
+                "m5": {
+                    "buys": 0,
+                    "sells": 0
+                },
+                "h1": {
+                    "buys": 2,
+                    "sells": 0
+                },
+                "h6": {
+                    "buys": 26,
+                    "sells": 12
+                },
+                "h24": {
+                    "buys": 69,
+                    "sells": 33
+                }
+            },
+            "volume": {
+                "h24": 230.2,
+                "h6": 73.01,
+                "h1": 3.88,
+                "m5": 0
+            },
+            "priceChange": {
+                "m5": 0,
+                "h1": 4.6,
+                "h6": 1.7,
+                "h24": 7.61
+            },
+            "liquidity": {
+                "usd": 333.35,
+                "base": 9335538843290,
+                "quote": 0.7298
+            },
+            "fdv": 7496699,
+            "pairCreatedAt": 1701274658000
+        },
+        {
+            "chainId": "bsc",
+            "dexId": "pancakeswap",
+            "url": "https://dexscreener.com/bsc/0x5e89900a52ef6cb0fcf9a1ea22db72ebcf4b1a95",
+            "pairAddress": "0x5E89900a52Ef6Cb0FCF9A1ea22DB72eBcf4B1a95",
+            "labels": [
+                "v2"
+            ],
+            "baseToken": {
+                "address": "0xb03A0158b3cde8C3D9A205453D4AE8EcD03b1607",
+                "name": "BOOM",
+                "symbol": "BOOM"
+            },
+            "quoteToken": {
+                "address": "0x88DA9901B3A02fE24E498e1eD683D2310383E295",
+                "name": "Baby Grok",
+                "symbol": "BabyGrok"
+            },
+            "priceNative": "1958215435.9601",
+            "priceUsd": "0.03643",
+            "txns": {
+                "m5": {
+                    "buys": 0,
+                    "sells": 0
+                },
+                "h1": {
+                    "buys": 0,
+                    "sells": 0
+                },
+                "h6": {
+                    "buys": 0,
+                    "sells": 0
+                },
+                "h24": {
+                    "buys": 7,
+                    "sells": 15
+                }
+            },
+            "volume": {
+                "h24": 111.36,
+                "h6": 0,
+                "h1": 0,
+                "m5": 0
+            },
+            "priceChange": {
+                "m5": 0,
+                "h1": 0,
+                "h6": 0,
+                "h24": -30.37
+            },
+            "liquidity": {
+                "usd": 73.66,
+                "base": 1010.7702,
+                "quote": 1979305875985
+            },
+            "fdv": 377,
+            "pairCreatedAt": 1701189208000
+        }
+    ]
 }
