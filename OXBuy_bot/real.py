@@ -439,11 +439,11 @@ def query_swap_events(app):
                                         print(f'aaa {e} Error')
                                     finally:
                                         print('one done')
-                                except IndexError:
-                                    print(f'ang error  occured')
+                                except Exception as e:
+                                    print(f'ang {e} eror')
 
-                                except IndexError:
-                                    print(f'ang error index occured')
+                                except Exception as e:
+                                    print(f'ang {e}')
                 bsc_last_block = bsc_current_block
                 time.sleep(QUERY_INTERVAL)           
 async def sticker_hand(update:Update,context:ContextTypes.DEFAULT_TYPE):
