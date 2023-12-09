@@ -4,16 +4,16 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler,Messag
 import os
 import logging
 from dotenv import load_dotenv
-import tracemalloc
+# import tracemalloc
 import requests
 import json
 import asyncio
-import time
-import millify
+# import time
+# import millify
 from web3 import Web3,exceptions
 import time
 import threading
-import schedule
+# import schedule
 from PIL import Image,ImageSequence
 from io import BytesIO
 from getpair import *
@@ -37,9 +37,6 @@ group_info={}
 users_details={}
 group_info_lock=threading.Lock()
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-
-
-
 rpc_url = "https://mainnet.infura.io/v3/7c2a5e84734b44e6a9af8b545ffbbdb3"
 # uniswap_helper = UniswapHelper(rpc_url)
 
